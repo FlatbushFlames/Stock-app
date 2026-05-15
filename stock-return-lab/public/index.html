@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0e141b" />
+    <title>Stock Return Lab</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon.svg" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <aside>
+      <div class="brand">STOCK RETURN LAB</div>
+      <button id="run">Run Analysis</button>
+      <button id="export">Export CSV</button>
+      <button id="clear">Clear Custom</button>
+      <label>Universe</label>
+      <select id="sector"></select>
+      <label>Search Loaded Rows</label>
+      <input id="search" placeholder="symbol, sector, industry" />
+      <label>Minimum Return</label>
+      <input id="minReturn" type="number" placeholder="Example: 50" />
+      <label>Rank Group</label>
+      <select id="groupBy">
+        <option value="sector">Top by Sector</option>
+        <option value="industry">Top by Industry</option>
+        <option value="subIndustry">Top by Sub Industry</option>
+      </select>
+      <label>Sort By</label>
+      <select id="sort">
+        <option value="full.totalReturnPct">20Y Total Return</option>
+        <option value="full.annualizedReturnPct">20Y Annualized</option>
+        <option value="windows.0.totalReturnPct">Last 5Y Total</option>
+        <option value="windows.0.averageDailyReturnPct">Last 5Y Avg Daily</option>
+        <option value="windows.0.averageWeeklyReturnPct">Last 5Y Avg Weekly</option>
+        <option value="windows.0.averageMonthlyReturnPct">Last 5Y Avg Monthly</option>
+      </select>
+      <label>Custom Tickers</label>
+      <textarea id="symbols" placeholder="AAPL, MSFT, NVDA"></textarea>
+      <p class="note">Data uses adjusted daily prices from Yahoo Finance through this local app. Outputs are research only, not financial advice.</p>
+    </aside>
+    <main>
+      <section class="topbar">
+        <div>
+          <h1>Industry Return Screener</h1>
+          <p>Daily, weekly, monthly, and 5-year-window returns across sectors and sub-industries.</p>
+        </div>
+        <div>
+          <div class="status" id="status">Ready</div>
+          <div class="provider" id="provider">Universe: checking</div>
+        </div>
+      </section>
+      <section class="install-banner" id="installBanner" hidden>
+        <span>Install Stock Return Lab for easier offline access on your phone.</span>
+        <button id="install">Install App</button>
+      </section>
+
+      <section class="query">
+        <input id="question" value="If I invested $20 in NVDA stock in 2021, how much would I have made in return today?" />
+        <button id="ask">Analyze Scenario</button>
+      </section>
+      <section id="answer" class="answer"></section>
+
+      <section class="summary" id="summary"></section>
+      <section class="leaderboard">
+        <div class="section-head">
+          <h2>Top Stocks By Group</h2>
+          <span id="rankLabel"></span>
+        </div>
+        <div id="leaders"></div>
+      </section>
+      <section class="tablewrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-sort="symbol">Symbol</th>
+              <th data-sort="sector">Sector</th>
+              <th data-sort="industry">Industry</th>
+              <th data-sort="subIndustry">Sub Industry</th>
+              <th data-sort="price">Price</th>
+              <th data-sort="full.totalReturnPct">20Y Total</th>
+              <th data-sort="full.annualizedReturnPct">20Y Ann.</th>
+              <th data-sort="windows.0.totalReturnPct">Last 5Y</th>
+              <th data-sort="windows.0.averageDailyReturnPct">Avg Daily</th>
+              <th data-sort="windows.0.averageWeeklyReturnPct">Avg Weekly</th>
+              <th data-sort="windows.0.averageMonthlyReturnPct">Avg Monthly</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </section>
+
+      <section class="windows">
+        <div class="section-head">
+          <h2>Selected Stock 5-Year Windows</h2>
+          <span id="selectedLabel">Click a row or leader card</span>
+        </div>
+        <canvas id="chart" height="220"></canvas>
+        <div id="detail"></div>
+      </section>
+      <section class="windows">
+        <h2>Saved Scenarios</h2>
+        <div id="saved"></div>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

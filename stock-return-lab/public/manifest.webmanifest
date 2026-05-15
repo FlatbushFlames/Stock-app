@@ -1,0 +1,18 @@
+{
+  "name": "Stock Return Lab",
+  "short_name": "Stock Lab",
+  "description": "Offline-capable stock return screener and scenario analyzer.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0e141b",
+  "theme_color": "#0e141b",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
